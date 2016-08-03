@@ -12,7 +12,7 @@ Array.prototype.isSubsetOf = function(bigArray) {
 
 Array.prototype.unique = function() {
   var solution = [];
-  for(var i=0; i<this.length; i++) {
+  for(var i = 0; i < this.length; i++) {
     if(solution.indexOf(this[i]) === -1) solution.push(this[i]);
   }
   return solution;
