@@ -5,7 +5,20 @@ var Tree = function(value){
 };
 
 Tree.prototype.countLeaves = function () {
-
+  if(this.children.length === 0) return 1;
+  var leaves = 0;
+  function recurse(children){
+    for(var i=0; i<children.length; i++){
+      var child = children[i];
+      if(child.children.length === 0) {
+        leaves += 1;
+      } else {
+        recurse(child.children);
+      }
+    }
+    return leaves;
+  }
+  return recurse(this.children);
 };
 
 /**
