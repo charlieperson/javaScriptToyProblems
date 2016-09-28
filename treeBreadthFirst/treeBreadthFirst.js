@@ -3,32 +3,36 @@ var Tree = function(value){
   this.children = [];
 };
 
+
 Tree.prototype.BFSelect = function(filter) {
-  console.log('NEW TEST');
+  var queue = [];
   var results = [];
-  var obj = {};
-  function recurse(node, depth) {
-    obj[depth] = [];
-    node.children.forEach(function(child) {
-      if(filter(child.value)) results.push(child.value);
-      if(child.children.length > 0) {
-        if(!(obj[depth+1])) obj[depth+1] = [];
-        obj[depth+1].push(child);
-        console.log(obj);
+
+  if(filter(this.value, 0)) results.push(this.value);
+
+  function checkIt(node, depth) {
+    node.children.forEach(child => {
+      if(filter(child.value, depth)) results.push(child.value);
+      if(child.children.length) {
+        queue.push([child, depth]);
       }
     });
-    if(obj[depth].length) obj[depth].forEach(function(node){
-      recurse(node, depth);
-    });
-    depth = depth + 1;
+
+    if(queue.length){
+      var temp = queue[0];
+      checkIt(queue.shift()[0], temp[1] + 1);
+    }
   }
-  recurse(this, 0);
+
+  checkIt(this, 1);
   return results;
 };
 
 /**
  * You shouldn't need to change anything below here, but feel free to look.
  */
+
+
 
 
 
