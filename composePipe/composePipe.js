@@ -1,15 +1,15 @@
-var compose = function(){
-  var mainArgs = arguments;
-  return function() {
-    var currentVal;
-    for(var i=0; i<mainArgs.length; i++){
-      console.log(mainArgs[i].call(null, arguments[0]))
-      currentVal = mainArgs[i].call(null, arguments[0])
-    }
-    return currentVal
+var compose = function(...args){
+  return function(arg) {
+    return [...args].reduceRight(function(accum, currentFunc) {
+      return currentFunc(accum)
+    }, arg)
   }
 };
 
-var pipe = function(){
-  //Your code here
+var pipe = function(...args){
+  return function(arg) {
+   return [...args].reduce(function(accum, currentFunc){
+     return currentFunc(accum)
+   }, arg)
+  }
 };
