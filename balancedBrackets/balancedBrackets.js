@@ -1,25 +1,38 @@
 function isBalanced (str) {
-  var parens   = 0
-  var brackets = 0
-  var squigles = 0
+  var result = true;
+  var brackets = ['(', ')', '[', ']', '{', '}']
+  var bareBones = []
 
   var inputToArray = str.split('');
 
   for(var i=0; i<inputToArray.length; i++) {
     var char = inputToArray[i]
-    if(parens < 0 || brackets < 0 || squigles < 0) return false
-
-    if(char === '(') parens += 1;
-    if(char === ')') parens -= 1;
-
-    if(char === '[') brackets += 1;
-    if(char === ']') brackets -= 1;
-
-    if(char === '{') squigles += 1;
-    if(char === '}') squigles -= 1;
-
+    if(brackets.indexOf(char) !== -1) bareBones.push(char)
   }
 
-  return(squigles === 0 && parens === 0 && brackets === 0)
+  var open   = []
+
+  bareBones.forEach(brack => {
+    if(brack === '(' || brack === '[' || brack === '{') {
+      open.push(brack)
+    } else {
+      if(brack === ')') {
+        var mostRecentlyOpened = open.pop()
+        if(mostRecentlyOpened !== '(') result = false;
+      }
+      if(brack === ']') {
+        var mostRecentlyOpened = open.pop()
+        if(mostRecentlyOpened !== '[') result = false;
+      }
+      if(brack === '}') {
+        var mostRecentlyOpened = open.pop()
+        if(mostRecentlyOpened !== '{') result = false;
+      }
+    }
+  })
+
+  if(open.length > 0) result = false;
+
+  return result
 
 }
