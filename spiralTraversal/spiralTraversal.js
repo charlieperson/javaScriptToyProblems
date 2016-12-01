@@ -1,22 +1,16 @@
-function spiralTraversal (matrix) {
-  var solution = matrix.shift()
-  console.log('===============')
-  console.log('matrix: ', matrix)
-  matrix.forEach((array, index) => {
-    solution.push(array.pop())
-    if(index === matrix.length-1) {
-      solution = solution.concat(matrix.pop().reverse())
+function spiralTraversal (main) {
+  var solution = []
+  var matrixLength = [].concat.apply([], main).length;
+  function recurse(matrix) {
+    if(solution.length === matrixLength) return solution
+    solution = solution.concat(matrix.shift())
+    for(var i=0; i<matrix.length; i++) {
+      solution.push(matrix[i].pop())
+      matrix[i] = matrix[i].reverse()
     }
-  })
-
-  for(var i=matrix.length-1; i>=0; i--){
-    solution.push(matrix[i].shift())
+    matrix = matrix.reverse()
+    return recurse(matrix)
   }
 
-  matrix.forEach((item) => {
-    solution.push(item[0])
-  })
-  console.log('final matrix: ', matrix)
-  console.log('final solution: ', solution)
-  return solution
+  return recurse(main)
 }
