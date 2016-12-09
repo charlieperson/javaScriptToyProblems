@@ -1,4 +1,3 @@
 function isPalindrome (str) {
-  // Write your code here, and
-  // return your final answer.
+  return str.split('').reverse().join('').toLowerCase() === str.toLowerCase()
 }
