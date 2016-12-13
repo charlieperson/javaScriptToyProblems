@@ -1,4 +1,9 @@
 function getPonyAllergies (ponies, ownerEmail) {
-  // Write your code here, and
-  // return your final answer.
+  return ponies.filter((obj) => {
+    return obj.email === ownerEmail
+  }).map((pony) => {
+    return pony.allergies
+  }).concatAll().sort().filter(function(item, pos, self) {
+    return self.indexOf(item) == pos;
+  })
 }
